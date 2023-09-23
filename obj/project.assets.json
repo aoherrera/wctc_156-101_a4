@@ -778,11 +778,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/soonerale/Documents/education/fall2023/DOTNET_DB/Herrera_A4/wctc_156-101_a4/ApplicationTemplate/ApplicationTemplate.csproj",
+      "projectUniqueName": "/Users/soonerale/Documents/education/fall2023/DOTNET_DB/Herrera_A4/wctc_156-101_a4/ApplicationTemplate.csproj",
       "projectName": "ApplicationTemplate",
-      "projectPath": "/Users/soonerale/Documents/education/fall2023/DOTNET_DB/Herrera_A4/wctc_156-101_a4/ApplicationTemplate/ApplicationTemplate.csproj",
+      "projectPath": "/Users/soonerale/Documents/education/fall2023/DOTNET_DB/Herrera_A4/wctc_156-101_a4/ApplicationTemplate.csproj",
       "packagesPath": "/Users/soonerale/.nuget/packages/",
-      "outputPath": "/Users/soonerale/Documents/education/fall2023/DOTNET_DB/Herrera_A4/wctc_156-101_a4/ApplicationTemplate/obj/",
+      "outputPath": "/Users/soonerale/Documents/education/fall2023/DOTNET_DB/Herrera_A4/wctc_156-101_a4/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/soonerale/.nuget/NuGet/NuGet.Config"

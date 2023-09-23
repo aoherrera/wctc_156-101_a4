@@ -19,9 +19,9 @@ public class MainService : IMainService
         string choice;
         do
         {
-            Console.WriteLine("1) Add Movie");
-            Console.WriteLine("2) Display All Movies");
-            Console.WriteLine("X) Quit");
+            Console.WriteLine("1. Display all movies");
+            Console.WriteLine("2. Add movie");
+            Console.WriteLine("3. Exit\n");
             choice = Console.ReadLine();
 
             // Logic would need to exist to validate inputs and data prior to writing to the file
@@ -35,7 +35,11 @@ public class MainService : IMainService
             {
                 _fileService.Read();
             }
+            else
+            {
+                Console.WriteLine("\nPlease select a valid option.\n");
+            }
         }
-        while (choice != "X");
+        while (choice != "3");
     }
 }
