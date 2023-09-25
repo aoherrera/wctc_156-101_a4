@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Extensions.Logging;
 
 namespace ApplicationTemplate.Services;
@@ -11,18 +12,47 @@ public class FileServiceCSV : IFileService
 {
     private readonly ILogger<IFileService> _logger;
 
-    public FileService(ILogger<IFileService> logger)
+    public FileServiceCSV(ILogger<IFileService> logger)
     {
         _logger = logger;
     }
-    public void Read()
+
+    public string FileName { get; set; }
+
+    public void Read(string filename)
     {
+        FileName = filename;
+
         _logger.Log(LogLevel.Information, "Reading");
         Console.WriteLine("*** I am reading");
+
+        if (File.Exists(filename))
+        {
+            StreamReader sr = new StreamReader(filename);
+
+            //Remove first line (headers) from output.
+            sr.ReadLine();
+
+            //Ask user what year they are interested in.
+            Console.WriteLine("Enter the release year of the movie(s) you are interested in.");
+
+            while (sr.EndOfStream != true)
+            {
+                var line = sr.ReadLine();
+                Console.WriteLine($"{line}");
+            }
+            Console.WriteLine("\n");
+
+        }
+        else
+        {
+            Console.WriteLine("File does not exist.\n");
+        }
     }
 
-    public void Write()
+    public void Write(string filename)
     {
+        FileName = filename;
         _logger.Log(LogLevel.Information, "Writing");
         Console.WriteLine("*** I am writing");
     }

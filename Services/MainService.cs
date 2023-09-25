@@ -16,6 +16,7 @@ public class MainService : IMainService
 
     public void Invoke()
     {
+        var filename = "movies.csv";
         string choice;
         do
         {
@@ -29,11 +30,11 @@ public class MainService : IMainService
             // Is it part of the FileService or some other service?
             if (choice == "1")
             {
-                _fileService.Write();
+                _fileService.Read(filename);
             }
             else if (choice == "2")
             {
-                _fileService.Read();
+                _fileService.Write(filename);
             }
             else
             {

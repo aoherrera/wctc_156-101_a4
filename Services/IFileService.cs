@@ -6,6 +6,9 @@
 /// </summary>
 public interface IFileService
 {
-    void Read();
-    void Write();
+    public string FileName { get; set; }
+
+    void Read(string filename);
+    void Write(string filename);
+
 }
