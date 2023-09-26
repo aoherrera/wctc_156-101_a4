@@ -73,6 +73,7 @@ public class FileServiceCSV : IFileService
                         if (elements[2].Contains("|"))
                         {
                             var genres = elements[2].Split("|");
+
                             for (int i = 0; i < genres.Length; i++)
                             {
                                 if (i != (genres.Length - 1))
@@ -113,5 +114,30 @@ public class FileServiceCSV : IFileService
         FileName = filename;
         //_logger.Log(LogLevel.Information, "Writing");
         //Console.WriteLine("*** I am writing");
+
+        //if file doesn't exist add header.
+        if (!File.Exists(filename))
+        {
+            StreamWriter sw_header = new StreamWriter(filename, true);
+            sw_header.WriteLine("movieId,title,genres");
+            sw_header.Close();
+        }
+        //find highest value movieID
+        StreamReader sr = new StreamReader(filename, true);
+
+        //skip header
+        sr.ReadLine();
+
+        //loop through and find highest value movieID.
+        int maxID = 0;
+        while (sr.EndOfStream != true)
+        {
+            var lineID = Int32.Parse(sr.ReadLine().Split(",")[0]);
+            if (lineID > maxID) { maxID = lineID; }
+        }
+        Console.WriteLine(maxID);
+        //StreamWriter sw = new StreamWriter(filename, true);
+        //var counts = new List<string>();
+
     }
 }

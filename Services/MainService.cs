@@ -20,7 +20,7 @@ public class MainService : IMainService
         string choice;
         do
         {
-            Console.WriteLine("1. Display all movies");
+            Console.WriteLine("1. Display movies");
             Console.WriteLine("2. Add movie");
             Console.WriteLine("3. Exit\n");
             choice = Console.ReadLine();
