@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using Microsoft.VisualBasic.FileIO;
 using Microsoft.Extensions.Logging;
 
 namespace ApplicationTemplate.Services;
@@ -35,7 +36,7 @@ public class FileServiceCSV : IFileService
             sr.ReadLine();
 
             //Ask user what year they are interested in.
-            var year = ValidateHelper.GetYear("Enter the release year of " +
+            var year = ValidateHelper.GetYear("\nEnter the release year of " +
                 "the movie(s) you are interested in.");
 
             var validLines = new List<string>();
@@ -46,7 +47,6 @@ public class FileServiceCSV : IFileService
                 if (line.Contains("(" + year + ")"))
                 {
                     validLines.Add(line);
-                    //Console.WriteLine($"{line}");
                 }
                 else
                 {
@@ -57,9 +57,44 @@ public class FileServiceCSV : IFileService
             {
                 foreach (string line in validLines)
                 {
-                    Console.WriteLine(line);
+                    TextFieldParser parser = new TextFieldParser(new StringReader(line));
+
+                    parser.HasFieldsEnclosedInQuotes = true;
+                    parser.SetDelimiters(",");
+
+                    string[] elements;
+
+                    while (!parser.EndOfData)
+                    {
+                        elements = parser.ReadFields();
+                        Console.WriteLine($"Movie ID: {elements[0]}");
+                        Console.WriteLine($"Title (Relaese Year): {elements[1]}");
+                        Console.Write($"Genre(s): ");
+                        if (elements[2].Contains("|"))
+                        {
+                            var genres = elements[2].Split("|");
+                            for (int i = 0; i < genres.Length; i++)
+                            {
+                                if (i != (genres.Length - 1))
+                                {
+                                    Console.Write(genres[i] + ", ");
+                                }
+                                else
+                                {
+                                    Console.Write(genres[i]);
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            Console.Write(elements[2]);
+                        }
+                        Console.WriteLine();
+                        Console.WriteLine();
+                    }
+                    parser.Close();
                 }
-                Console.WriteLine("\n");
             }
             else
             {
