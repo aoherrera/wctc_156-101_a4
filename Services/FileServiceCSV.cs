@@ -20,11 +20,6 @@ public class FileServiceCSV : IFileService
 
     public string FileName { get; set; }
 
-    public string LineParser(string line)
-    {
-        
-    }
-
     public void Read(string filename)
     {
         FileName = filename;

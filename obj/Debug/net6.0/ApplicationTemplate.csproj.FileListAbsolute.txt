@@ -27,3 +27,4 @@
 /Users/soonerale/Documents/education/fall2023/DOTNET_DB/Herrera_A4/wctc_156-101_a4/obj/Debug/net6.0/ApplicationTemplate.pdb
 /Users/soonerale/Documents/education/fall2023/DOTNET_DB/Herrera_A4/wctc_156-101_a4/obj/Debug/net6.0/ApplicationTemplate.genruntimeconfig.cache
 /Users/soonerale/Documents/education/fall2023/DOTNET_DB/Herrera_A4/wctc_156-101_a4/obj/Debug/net6.0/ref/ApplicationTemplate.dll
+/Users/soonerale/Documents/education/fall2023/DOTNET_DB/Herrera_A4/wctc_156-101_a4/bin/Debug/net6.0/CsvTextFieldParser.dll
