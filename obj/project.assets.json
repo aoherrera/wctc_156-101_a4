@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "CsvTextFieldParser/1.2.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CsvTextFieldParser.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/CsvTextFieldParser.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/6.0.0": {
         "type": "package",
         "dependencies": {
@@ -327,6 +340,19 @@
     }
   },
   "libraries": {
+    "CsvTextFieldParser/1.2.2": {
+      "sha512": "hTa2L7IOiTuNFONKormYjKZshm4UiEh74CUO7dc5/3cxuVGzfpmRtuKtpEpVmgvhFu0M4niZ9WxVpIM5CdELNQ==",
+      "type": "package",
+      "path": "csvtextfieldparser/1.2.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "csvtextfieldparser.1.2.2.nupkg.sha512",
+        "csvtextfieldparser.nuspec",
+        "lib/netstandard2.0/CsvTextFieldParser.dll",
+        "lib/netstandard2.0/CsvTextFieldParser.xml"
+      ]
+    },
     "Microsoft.Extensions.Configuration/6.0.0": {
       "sha512": "tq2wXyh3fL17EMF2bXgRhU7JrbO3on93MRKYxzz4JzzvuGSA1l0W3GI9/tl8EO89TH+KWEymP7bcFway6z9fXg==",
       "type": "package",
@@ -765,6 +791,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "CsvTextFieldParser >= 1.2.2",
       "Microsoft.Extensions.Configuration >= 6.0.0",
       "Microsoft.Extensions.DependencyInjection >= 6.0.0",
       "Microsoft.Extensions.Logging >= 6.0.0",
@@ -809,6 +836,10 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "CsvTextFieldParser": {
+            "target": "Package",
+            "version": "[1.2.2, )"
+          },
           "Microsoft.Extensions.Configuration": {
             "target": "Package",
             "version": "[6.0.0, )"

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
 namespace ApplicationTemplate.Services;
@@ -19,6 +20,11 @@ public class FileServiceCSV : IFileService
 
     public string FileName { get; set; }
 
+    public string LineParser(string line)
+    {
+        
+    }
+
     public void Read(string filename)
     {
         FileName = filename;
@@ -34,14 +40,36 @@ public class FileServiceCSV : IFileService
             sr.ReadLine();
 
             //Ask user what year they are interested in.
-            Console.WriteLine("Enter the release year of the movie(s) you are interested in.");
+            var year = ValidateHelper.GetYear("Enter the release year of " +
+                "the movie(s) you are interested in.");
+
+            var validLines = new List<string>();
 
             while (sr.EndOfStream != true)
             {
                 var line = sr.ReadLine();
-                Console.WriteLine($"{line}");
+                if (line.Contains("(" + year + ")"))
+                {
+                    validLines.Add(line);
+                    //Console.WriteLine($"{line}");
+                }
+                else
+                {
+                    continue;
+                }
             }
-            Console.WriteLine("\n");
+            if (validLines.Count != 0)
+            {
+                foreach (string line in validLines)
+                {
+                    Console.WriteLine(line);
+                }
+                Console.WriteLine("\n");
+            }
+            else
+            {
+                Console.WriteLine("\nThere are no entries which match your criteria.\n");
+            }
 
         }
         else
