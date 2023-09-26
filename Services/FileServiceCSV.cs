@@ -11,12 +11,12 @@ namespace ApplicationTemplate.Services;
 /// </summary>
 public class FileServiceCSV : IFileService
 {
-    private readonly ILogger<IFileService> _logger;
+    //private readonly ILogger<IFileService> _logger;
 
-    public FileServiceCSV(ILogger<IFileService> logger)
-    {
-        _logger = logger;
-    }
+    //public FileServiceCSV(ILogger<IFileService> logger)
+    //{
+    //    _logger = logger;
+    //}
 
     public string FileName { get; set; }
 
@@ -24,8 +24,8 @@ public class FileServiceCSV : IFileService
     {
         FileName = filename;
 
-        _logger.Log(LogLevel.Information, "Reading");
-        Console.WriteLine("*** I am reading");
+        //_logger.Log(LogLevel.Information, "Reading");
+        //Console.WriteLine("*** I am reading");
 
         if (File.Exists(filename))
         {
@@ -76,7 +76,7 @@ public class FileServiceCSV : IFileService
     public void Write(string filename)
     {
         FileName = filename;
-        _logger.Log(LogLevel.Information, "Writing");
-        Console.WriteLine("*** I am writing");
+        //_logger.Log(LogLevel.Information, "Writing");
+        //Console.WriteLine("*** I am writing");
     }
 }
