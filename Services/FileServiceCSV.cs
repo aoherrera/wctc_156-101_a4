@@ -135,9 +135,63 @@ public class FileServiceCSV : IFileService
             var lineID = Int32.Parse(sr.ReadLine().Split(",")[0]);
             if (lineID > maxID) { maxID = lineID; }
         }
-        Console.WriteLine(maxID);
-        //StreamWriter sw = new StreamWriter(filename, true);
-        //var counts = new List<string>();
 
+        StreamWriter sw = new StreamWriter(filename, true);
+        var genres = new List<string>();
+
+        Console.WriteLine("Enter the movie title:");
+        var movieTitle = Console.ReadLine();
+
+        Console.WriteLine("Enter the movie release year:");
+        var movieYear = Console.ReadLine();
+
+        Console.WriteLine("Enter a genre for the movie:");
+        var movieGenre = Console.ReadLine();
+
+        genres.Add(movieGenre);
+
+        string anotherGenre;
+
+        do
+        {
+            Console.WriteLine($"Would you like to add another genre for movie \"{movieTitle}\" (Y/N)?");
+            anotherGenre = Console.ReadLine().ToUpper();
+            if (anotherGenre == "Y")
+            {
+                Console.WriteLine("Enter a genre for the movie:");
+                movieGenre = Console.ReadLine();
+                genres.Add(movieGenre);
+
+            }
+            else if (anotherGenre == "N")
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Please enter either 'Y' for yes or 'N' for no.");
+            }
+        } while (anotherGenre != "N");
+
+        if (genres.Count != 1)
+        {
+            movieGenre = null;
+            for (int i = 0; i < genres.Count; i++)
+            {
+                if (i != genres.Count - 1)
+                {
+                    movieGenre += genres[i] + "|";
+                }
+                else
+                {
+                    movieGenre += genres[i];
+                }
+            }
+        }
+
+        sw.WriteLine($"{maxID + 1},{movieTitle} ({movieYear}),{movieGenre}");
+
+        sw.Close();
     }
+
 }
