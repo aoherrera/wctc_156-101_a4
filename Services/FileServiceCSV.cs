@@ -148,16 +148,15 @@ public class FileServiceCSV : IFileService
 
             Console.WriteLine("Enter the movie title:");
             var movieTitle = Console.ReadLine();
-            userEntries.Add(movieTitle);
+            userEntries.Add(ValidateHelper.ConvertTitle(movieTitle));
 
-            Console.WriteLine("Enter the movie release year:");
-            var movieYear = Console.ReadLine();
+            var movieYear = ValidateHelper.GetYear("Enter the movie release year:");
             userEntries.Add(movieYear);
 
             Console.WriteLine("Enter a genre for the movie:");
             var movieGenre = Console.ReadLine();
 
-            genres.Add(movieGenre);
+            genres.Add(ValidateHelper.ConvertTitle(movieGenre));
 
             string anotherGenre;
 
@@ -169,7 +168,7 @@ public class FileServiceCSV : IFileService
                 {
                     Console.WriteLine("Enter a genre for the movie:");
                     movieGenre = Console.ReadLine();
-                    genres.Add(movieGenre);
+                    genres.Add(ValidateHelper.ConvertTitle(movieGenre));
 
                 }
                 else if (anotherGenre == "N")
