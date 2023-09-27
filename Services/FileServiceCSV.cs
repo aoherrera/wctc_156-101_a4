@@ -115,83 +115,139 @@ public class FileServiceCSV : IFileService
         //_logger.Log(LogLevel.Information, "Writing");
         //Console.WriteLine("*** I am writing");
 
-        //if file doesn't exist add header.
-        if (!File.Exists(filename))
-        {
-            StreamWriter sw_header = new StreamWriter(filename, true);
-            sw_header.WriteLine("movieId,title,genres");
-            sw_header.Close();
-        }
-        //find highest value movieID
-        StreamReader sr = new StreamReader(filename, true);
-
-        //skip header
-        sr.ReadLine();
-
-        //loop through and find highest value movieID.
+        var userEntries = new List<string>();
         int maxID = 0;
-        while (sr.EndOfStream != true)
-        {
-            var lineID = Int32.Parse(sr.ReadLine().Split(",")[0]);
-            if (lineID > maxID) { maxID = lineID; }
-        }
-
-        StreamWriter sw = new StreamWriter(filename, true);
-        var genres = new List<string>();
-
-        Console.WriteLine("Enter the movie title:");
-        var movieTitle = Console.ReadLine();
-
-        Console.WriteLine("Enter the movie release year:");
-        var movieYear = Console.ReadLine();
-
-        Console.WriteLine("Enter a genre for the movie:");
-        var movieGenre = Console.ReadLine();
-
-        genres.Add(movieGenre);
-
-        string anotherGenre;
 
         do
         {
-            Console.WriteLine($"Would you like to add another genre for movie \"{movieTitle}\" (Y/N)?");
-            anotherGenre = Console.ReadLine().ToUpper();
-            if (anotherGenre == "Y")
+            if (!File.Exists(filename))
             {
-                Console.WriteLine("Enter a genre for the movie:");
-                movieGenre = Console.ReadLine();
-                genres.Add(movieGenre);
+                StreamWriter sw_header = new StreamWriter(filename, true);
+                sw_header.WriteLine("movieId,title,genres");
+                sw_header.Close();
+            }
+            //find highest value movieID
+            StreamReader sr = new StreamReader(filename, true);
 
-            }
-            else if (anotherGenre == "N")
-            {
-                break;
-            }
-            else
-            {
-                Console.WriteLine("Please enter either 'Y' for yes or 'N' for no.");
-            }
-        } while (anotherGenre != "N");
+            //skip header
+            sr.ReadLine();
 
-        if (genres.Count != 1)
-        {
-            movieGenre = null;
-            for (int i = 0; i < genres.Count; i++)
+            //loop through and find highest value movieID.
+            while (sr.EndOfStream != true)
             {
-                if (i != genres.Count - 1)
+                var lineID = Int32.Parse(sr.ReadLine().Split(",")[0]);
+                if (lineID > maxID) { maxID = lineID; }
+            }
+
+            var genres = new List<string>();
+
+            if (userEntries.Count != 0)
+            {
+                userEntries.Clear();
+            }
+
+            Console.WriteLine("Enter the movie title:");
+            var movieTitle = Console.ReadLine();
+            userEntries.Add(movieTitle);
+
+            Console.WriteLine("Enter the movie release year:");
+            var movieYear = Console.ReadLine();
+            userEntries.Add(movieYear);
+
+            Console.WriteLine("Enter a genre for the movie:");
+            var movieGenre = Console.ReadLine();
+
+            genres.Add(movieGenre);
+
+            string anotherGenre;
+
+            do
+            {
+                Console.WriteLine($"Would you like to add another genre for movie \"{movieTitle}\" (Y/N)?");
+                anotherGenre = Console.ReadLine().ToUpper();
+                if (anotherGenre == "Y")
                 {
-                    movieGenre += genres[i] + "|";
+                    Console.WriteLine("Enter a genre for the movie:");
+                    movieGenre = Console.ReadLine();
+                    genres.Add(movieGenre);
+
+                }
+                else if (anotherGenre == "N")
+                {
+                    break;
                 }
                 else
                 {
-                    movieGenre += genres[i];
+                    Console.WriteLine("Please enter either 'Y' for yes or 'N' for no.");
+                }
+            } while (anotherGenre != "N");
+
+            if (genres.Count != 1)
+            {
+                movieGenre = null;
+                for (int i = 0; i < genres.Count; i++)
+                {
+                    if (i != genres.Count - 1)
+                    {
+                        movieGenre += genres[i] + "|";
+                    }
+                    else
+                    {
+                        movieGenre += genres[i];
+                    }
                 }
             }
+
+            userEntries.Add(movieGenre);
+
+            if (CSVDuplicateChecker(userEntries, filename))
+            {
+                Console.WriteLine("This entry already exists. Please enter a new movie.");
+            }
+
+        } while (CSVDuplicateChecker(userEntries, filename));
+
+        StreamWriter sw = new StreamWriter(filename, true);
+        sw.WriteLine($"{maxID + 1},{userEntries[0]} ({userEntries[1]}),{userEntries[2]}");
+        sw.Close();
+    }
+ 
+    public bool CSVDuplicateChecker(List<String> userEntry, string csvfile)
+    {
+        FileName = csvfile;
+        StreamReader sr = new StreamReader(csvfile);
+
+        var csvLines = new List<string>();
+
+        while (sr.EndOfStream != true)
+        {
+            var line = sr.ReadLine();
+            csvLines.Add(line);
         }
 
-        sw.WriteLine($"{maxID + 1},{movieTitle} ({movieYear}),{movieGenre}");
+        foreach (string line in csvLines)
+        {
+            TextFieldParser parser = new TextFieldParser(new StringReader(line));
 
-        sw.Close();
+            parser.HasFieldsEnclosedInQuotes = true;
+            parser.SetDelimiters(",");
+
+            string[] elements;
+
+            while (!parser.EndOfData)
+            {
+                elements = parser.ReadFields();
+                var throwaway = elements[0];
+                if ($"{userEntry[0]} ({userEntry[1]})" == $"{elements[1]}")
+                {
+                    return true;
+                }
+            }
+
+            parser.Close();
+        }
+
+        return false;
     }
 
 }
